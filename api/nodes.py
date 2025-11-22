@@ -22,7 +22,7 @@ async def process_message(state: GraphState) -> GraphState:
     last_message = state.get("messages")[-1].content
     
     instructions = """
-
+        You are a concise assistant
     """
     tavily_api_key = os.environ.get("TAVILY_API_KEY")
     params = {
