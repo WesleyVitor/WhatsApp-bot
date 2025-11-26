@@ -4,12 +4,19 @@ from workflow import create_graph
 from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv
-
+from fastapi.middleware.cors import CORSMiddleware
 from client import InfobipClient
 load_dotenv(override=True)
 
 app = FastAPI(title="WhatsApp Bot API", version="1.0.0")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ou sua lista de domínios
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class RequestBody(BaseModel):
     question: str
     user_number: str
@@ -44,6 +51,9 @@ async def send_template(body: RequestBody):
     
     return ResponseBody(success_info="Message sent successful!")
 
+@app.post("/hello")
+def hello():
+    return {}
 
 if __name__ == "__main__":
     import uvicorn
