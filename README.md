@@ -174,6 +174,7 @@ whatsapp_bot/
 | `FROM_NUMBER` | Twilio WhatsApp sender number | Yes |
 | `TAVILY_API_KEY` | Tavily search API key | Yes |
 | `OPENAI_API_KEY` | OpenAI API key | Yes |
+| `NEXT_PUBLIC_HOST_API` | API Host | Yes |
 
 ## 🔄 How It Works
 
