@@ -4,3 +4,4 @@ langgraph==1.0.3
 pydantic==2.12.4
 openai-agents==0.6.1
 python-dotenv==1.2.1
+twilio==9.8.7
