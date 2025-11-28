@@ -8,7 +8,7 @@ import {
 
 async function sendTemplate(data){
   const HOST = process.env.NEXT_PUBLIC_HOST_API;
-  await fetch(`${HOST}/send_template`, {
+  await fetch(`${HOST}/send_twilio_template`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -19,16 +19,19 @@ async function sendTemplate(data){
 export default function Home() {
   
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [user_name, setUserName] = useState('');
   const [message, setMessage] = useState('');
   const mutation = useMutation({
     mutationFn: sendTemplate,
     onSuccess: () => {
       setMessage('Initial message was sent!');
       setPhoneNumber('');
+      setUserName('');
     },
     onError: ()=>{
       setMessage('Error sending initial message. Please try again.');
       setPhoneNumber('');
+      setUserName('');
     }
   })
   
@@ -37,6 +40,7 @@ export default function Home() {
     
     mutation.mutate({
       user_number: phoneNumber,
+      user_name: user_name
     })
     
 
@@ -58,6 +62,23 @@ export default function Home() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label 
+                htmlFor="name" 
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={user_name}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="Alison Jonas"
+                className="w-full px-4 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none transition-all bg-white  text-gray-900  placeholder-gray-400 "
+                required
+              />
+            </div>
+            <div>
+              <label 
                 htmlFor="phone" 
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
@@ -68,7 +89,7 @@ export default function Home() {
                 id="phone"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="+1234567890"
+                placeholder="558494567613"
                 className="w-full px-4 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none transition-all bg-white  text-gray-900  placeholder-gray-400 "
                 required
               />
