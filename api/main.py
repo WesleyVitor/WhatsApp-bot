@@ -1,6 +1,6 @@
 
 import os
-
+import json
 from workflow import create_graph
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -37,13 +37,15 @@ async def send_twilio_template(body: RequestBody):
     content_sid = os.environ.get("CONTENT_SID")
     from_number = os.environ.get("FROM_NUMBER")
     to_number = body.user_number
+    
     user_name = body.user_name
+    
     client = Client(account_sid, auth_token)
 
     client.messages.create(
         from_=f'whatsapp:{from_number}',
         content_sid=content_sid,
-        content_variables=f'{"1":{user_name}}',
+        content_variables=json.dumps({"1": user_name}),
         to=f'whatsapp:+{to_number}'
     )
     
