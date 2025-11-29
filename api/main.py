@@ -45,7 +45,8 @@ async def send_twilio_template(body: RequestBody):
     client.messages.create(
         from_=f'whatsapp:{from_number}',
         content_sid=content_sid,
-        content_variables=json.dumps({"1": user_name}),
+        #content_variables=json.dumps({"1": user_name}),
+        content_variables='{"1":"12/1","2":"3pm"}',
         to=f'whatsapp:+{to_number}'
     )
     
